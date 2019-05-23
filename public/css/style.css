@@ -1,0 +1,319 @@
+/*
+	Template: Fanan Dala v1
+*/
+@font-face {
+  font-family: Poppins;
+  src: url('../fonts/Poppins-Regular.ttf');
+}
+
+/*--------------------------------------------
+	General
+---------------------------------------------*/
+body {
+	background: #ffffff;
+	font-family: Poppins, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	overflow-x: hidden;
+}
+
+html, body {
+width: 100%;
+height: 100%;
+}
+
+.parallax-section {
+  background-attachment: fixed !important;
+  background-size: cover !important;
+}
+
+/*--------------------------------------------
+	Typography
+---------------------------------------------*/
+h1,h2,h3,h4,h5,h6 {
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0px;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 45px;
+  line-height: normal;
+}
+
+h2 {
+  color: #2b2b2b;
+  font-size: 35px;
+  line-height: 52px;
+  margin-top: 0px;
+}
+
+h3 {
+  color: #282828;
+  font-size: 16px;
+  line-height: 32px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+
+h4 {
+  color: #353535;
+  font-size: 20px;
+}
+
+p {
+  color: #878787;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 25px;
+  letter-spacing: 0.2px;
+}
+
+.bg-grey {
+  background: #2b2b2b !important;
+}
+
+.white-color {
+  color: #f0f0f0;
+}
+
+span.logo {
+	color: #f0f0f0;
+	text-transform: uppercase;
+	font-size: 25px;
+	font-style: normal;
+	font-weight: bold;
+	font-family: 'Poppins', sans-serif;
+}
+
+section {
+	position: relative;
+  padding-top: 80px;
+	padding-bottom: 80px;
+	background: #f9f9f9;
+	text-align: center;
+	min-height: 500px;
+}
+
+
+.section-title {
+  margin: 0;
+  padding-bottom: 32px;
+}
+
+/*--------------------------------------------
+	Buttons
+---------------------------------------------*/
+.section-btn {
+  background: #ffffff;
+  border: none;
+  border-radius: 50px;
+  color: #000000;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  padding: 18px 32px;
+  margin-top: 42px;
+  text-transform: uppercase;
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
+}
+
+.section-btn:focus,
+.section-btn:hover {
+  background: #396afc;
+  color: #f0f0f0;
+}
+/*--------------------------------------------
+	Preloader
+---------------------------------------------*/
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background: none repeat scroll 0 0 #ffffff;
+}
+
+.relative-preloader {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background: none repeat scroll 0 0 #ffffff;
+}
+.spinner {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  position: relative;
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 65px;
+  height: 65px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #454545;
+  border-top-color: #ffffff;
+  animation: spinner .9s linear infinite;
+}
+
+@-webkit-@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+/*--------------------------------------------
+	Navigation
+---------------------------------------------*/
+.navbar {
+	border:0px solid #222;
+	margin: auto;
+	min-height: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	position: fixed;
+	top: 0;
+	transition: 0.4s;
+}
+
+
+.navbar .navbar-nav > li > a, .navbar-nav a {
+	color: #ffffff;
+	font-size: 14px;
+	letter-spacing: 1px;
+}
+
+.navbar .navbar-nav > li > a:hover {
+	color: #ffffff;
+	opacity: 0.6;
+	background: none;
+}
+
+.nav > li > a {
+	position: relative;
+	display: block;
+	padding: 5px 5px;
+}
+
+.navbar.no-bg {
+	background: none;
+	border: 0px solid;
+	padding: 10px 10px;
+}
+
+.navbar.no-bg .navbar-nav > li > a, .navbar-nav a {
+	text-shadow: 0px 0px 0px #777;
+	padding: 10px 10px;
+}
+.navbar-toggle {
+	position: relative;
+	float: right;
+	padding: 9px 10px;
+	margin-top: 8px;
+	margin-right: 15px;
+	margin-bottom: 8px;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	z-index: 999;
+}
+
+.navbar-toggle .icon-bar {
+	display: block;
+	width: 22px;
+	height: 2px;
+	border-radius: 1px;
+	border: 1px solid black;
+}
+/*--------------------------------------------
+	----Title Template
+---------------------------------------------*/
+
+
+/*--------------------------------------------
+	Footer
+---------------------------------------------*/
+footer {
+  position: relative;
+  padding: 35px;
+	background: #222;
+  text-align: center;
+}
+
+.social-icon {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.social-icon li {
+  display: inline-block;
+  list-style: none;
+}
+
+.social-icon li a {
+  background: #ffffff;
+  border-radius: 100%;
+  color: #454545;
+  cursor: pointer;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.4s ease-in-out;
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  top: 0;
+  margin: 0px 6px 10px 6px;
+}
+
+.social-icon li a:hover {
+  background: #396afc;
+  color: #ffffff;
+  transform: scale(1.1);
+  top: -5px;
+}
+/*--------------------------------------------
+Page not found
+---------------------------------------------*/
+div.not-found {
+  width: 100%;
+  height: 75vh;
+  text-align: center;
+  padding: 100px;
+}
+
+div.not-found h1 {
+  color: black;
+  font-size: 6em;
+  font-weight: bold;
+}
+
+div.not-found h4 {
+  color: #777;
+  font-size: 3em;
+}
