@@ -17,5 +17,11 @@
  Very Small devices: Phones
 */
 @media (max-width: 500px){
+	.container.content {
+		padding-top: 70px;
+	}
 
+	.overlay.auth-overlay {
+		padding: 70px;
+	}
 }
