@@ -13,9 +13,15 @@
                         <div class="col-lg-11 col-md-10 col-sm-10 col-10">
                             <form>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Enter New Post Description" v-on:focus="showNewPostButtons = true" v-on:blur="showNewPostButtons = false">
+                                    <input class="form-control" placeholder="Enter New Post Description" v-on:focus="showNewPostButtons = true">
                                 </div>
                                 <div class="form-group" v-show="showNewPostButtons">
+                                    <select name="restriction">
+                                        <option value="public">Public</option>
+                                        <option value="friend">Friend</option>
+                                        <option value="family">Family</option>
+                                        <option value="freind-family">Friends and Family</option>
+                                    </select>
                                     <button class="file btn btn-primary">
                                             <input hidden type="file" name="file"/>
                                             <i class="fa fa-camera"></i>
@@ -135,8 +141,85 @@
        :duration="{ enter: 2000, leave: 800 }">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 family-column"  v-cloak v-show="showFamilies">
                 <ul class="list-group">
-                        <li class="list-group-item list-group-item-very-dark text-white">
-                        Families
+                        <li class="list-group-item list-group-item-very-dark text-white d-flex justify-content-between">
+                        Your Families
+
+                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createFamilyModal">Create</button>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="text-dark">
+                                        <a href="#" class="text-dark">The Abayomi's</a>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                </div>
+                            </div>    
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h6 class="text-dark">
+                                        The Akinyomi's
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                    <a href="#">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                    </a>
+                                </div>
+                            </div>    
                         </li>
                 </ul>
             </div>
@@ -145,6 +228,32 @@
     <span class="show-family rounded-circle justify-content-center" v-on:click="showFamilies = !showFamilies">
         <i class="fa fa-group text-white"></i>
     </span>
+
+    <!-- Modal for create family-->
+    <div class="modal fade" id="createFamilyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Family</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form class="justify-content-center">
+                       <div class="form-group">
+                           <input class="form-control" placeholder="Family Name"/>
+                       </div>
+                       <div class="form-group">
+                            <input class="form-control" placeholder="Add member"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                   </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 </div>
 
 
