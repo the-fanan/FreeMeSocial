@@ -263,6 +263,19 @@ section {
 	cursor: pointer;
 }
 /*--------------------------------------------
+	 Home Pags styling
+---------------------------------------------*/
+.home-container {
+  padding-top: 80px;
+}
+
+.list-group-item-very-dark {
+  background-color: #343a40;
+}
+.very-small-circle {
+  width: 40px;
+}
+/*--------------------------------------------
 	Register styling
 ---------------------------------------------*/
 .content.auth {
