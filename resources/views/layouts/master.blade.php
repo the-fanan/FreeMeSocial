@@ -18,9 +18,8 @@
 
 		@yield('content')
 
-		@include('includes.footer')
 		<!-- Scripts -->
-		<script src="{{ url(mix('js/app.js')) }}" defer></script>
+		<script src="{{ url(mix('js/app.js')) }}"></script>
 		@stack('page-scripts')
 	</body>
 </html>
