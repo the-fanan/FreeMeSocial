@@ -13,10 +13,10 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="name" class="">{{ __('Name') }}</label>
+                                <label for="name" class="">{{ __('Full Name') }}</label>
 
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
+                                    <small id="firstameHelp" class="form-text text-muted">Firstname Lastname</small>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -30,7 +30,7 @@
 
                                
                                     <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
-
+                                   
                                     @error('username')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
