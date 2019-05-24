@@ -59,7 +59,8 @@ h3 {
 
 h4 {
   color: #353535;
-  font-size: 20px;
+  font-size: 18px;
+  padding-left: 10px;
 }
 
 p {
@@ -284,6 +285,31 @@ section {
   right: 30px;
   cursor: pointer;
   display: none;
+}
+
+.image-cover {
+  max-height: 400px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.image-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background: none repeat scroll 0 0 #ffffff;
+}
+
+.load-more {
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 /*--------------------------------------------
 	Register styling

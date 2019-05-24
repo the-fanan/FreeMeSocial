@@ -13,9 +13,9 @@
                         <div class="col-lg-11 col-md-10 col-sm-10 col-10">
                             <form>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Title">
+                                    <input class="form-control" placeholder="Enter New Post Description" v-on:focus="showNewPostButtons = true" v-on:blur="showNewPostButtons = false">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" v-show="showNewPostButtons">
                                     <button class="file btn btn-primary">
                                             <input hidden type="file" name="file"/>
                                             <i class="fa fa-camera"></i>
@@ -30,29 +30,107 @@
                         </div>
                     </div>
                 </li>
+                <!--li class="list-group-item">
+                        intendted for new posts
+                </li-->
                 <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row justify-content-start">
+                                <div class="col-2 col-lg-1 col-md-2 col-sm-2">
+                                    <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
+                                </div>
 
-                </li>
-                <li class="list-group-item">
-                    b
+                                <div class="col-10 col-lg-11 col-md-10 col-sm-10">
+                                    <h4 clas="text-body">The_fanan</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4 justify-content-end d-flex">
+                            <p class="text-muted">May 04</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="text-body">My first Title</p>
+                            <div class="image-cover rounded">
+                                    <img class="rounded img-responsive" src="{{ asset('images/orange-jelly.jpg') }}"/>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </li>
 
                 <li class="list-group-item">
-                c
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row justify-content-start">
+                                <div class="col-2 col-lg-1 col-md-2 col-sm-2">
+                                    <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
+                                </div>
+
+                                <div class="col-10 col-lg-11 col-md-10 col-sm-10">
+                                    <h4 class="text-body">Anike</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-4 justify-content-end d-flex">
+                            <p class="text-muted">May 07</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p class="text-body">My first post</p>
+                            <div class="image-cover rounded">
+                                    <img class="rounded img-responsive" src="{{ asset('images/fine-girl.jpg') }}"/>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </li>
 
                 <li class="list-group-item">
-            d
-                </li>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row justify-content-start">
+                                    <div class="col-2 col-lg-1 col-md-2 col-sm-2">
+                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
+                                    </div>
+    
+                                    <div class="col-10 col-lg-11 col-md-10 col-sm-10">
+                                        <h4 class="text-body">Anike</h4>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-4 justify-content-end d-flex">
+                                <p class="text-muted">May 07</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p class="text-body">My first post</p>
+                                <div class="image-cover rounded">
+                                    <video controls>
+                                        <source src="{{ asset('images/naruto.mp4') }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video> 
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </li>
+    
             </ul>
+            <button class="btn btn-block btn-dark load-more btn-lg">Load More</button>
        </div>
 
-       <transition name="hero-intro-transition"
+       <transition name="family-column-transition"
        enter-active-class="animated fadeInRight"
-       leave-active-class="animated fadeOutLeft" 
-       appear 
-       v-on:after-appear="changeIntro"
-       v-on:after-enter="changeIntro"
+       leave-active-class="animated fadeOutRight" 
+       appear
        mode="out-in"
        :duration="{ enter: 2000, leave: 800 }">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 family-column"  v-cloak v-show="showFamilies">
@@ -80,6 +158,7 @@
         data: {
             error: null,
             showFamilies: true,
+            showNewPostButtons: false,
         },
         created() {
             if (window.innerWidth < 577) {
