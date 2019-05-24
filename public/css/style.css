@@ -275,6 +275,16 @@ section {
 .very-small-circle {
   width: 40px;
 }
+
+.show-family {
+  background-color:#007bff;
+  padding: 15px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  display: none;
+}
 /*--------------------------------------------
 	Register styling
 ---------------------------------------------*/
