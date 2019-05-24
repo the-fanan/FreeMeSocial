@@ -238,6 +238,31 @@ section {
   min-height: 100vh;
 }
 /*--------------------------------------------
+	Hero Styling
+---------------------------------------------*/
+.hero {
+	background-image: url('../images/cover-photo.jpg');
+	background-repeat: no-repeat;/* 50% 0 repeat-y fixed;*/
+	background-attachment: fixed;
+	background-size: cover !important;
+	background-color: rgba(23,45,67,0.6);
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.home-thumb {
+  padding: 70px;
+}
+.home-thumb h1 {
+  text-shadow: black 0.5px 1px 1px;
+}
+.home-thumb p {
+  text-shadow: black 0px 0px .3px;
+}
+.home-thumb:hover{
+	cursor: pointer;
+}
+/*--------------------------------------------
 	Register styling
 ---------------------------------------------*/
 .content.auth {
@@ -320,3 +345,8 @@ div.not-found h4 {
   color: #777;
   font-size: 3em;
 }
+
+/*--------------------------------------------
+For Vue  -- must come last
+---------------------------------------------*/
+[v-cloak] { display:none !important; }

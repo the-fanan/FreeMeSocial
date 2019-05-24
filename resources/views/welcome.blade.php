@@ -1,99 +1,71 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.master')
 
-        <title>Laravel</title>
+@section('content')
+    <div class="container-fluid parallax-section hero" id="landing"> 
+        <div class="row">
+            <div class="col-lg col-md justify-content-start d-flex">
+                <transition name="hero-intro-transition"
+                enter-active-class="animated fadeInLeft"
+                leave-active-class="animated fadeOutRight" 
+                appear 
+                v-on:after-appear="changeIntro"
+                v-on:after-enter="changeIntro"
+                mode="out-in"
+                :duration="{ enter: 2000, leave: 800 }">
+                    <div class="home-thumb" v-cloak v-bind:key="currentIntro.h">
+                            <h1>${ currentIntro.h }</h1>
+                            <p class="text-body">${ currentIntro.p }</p>
+                    </div>
+                </transition>
+            </div>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+            <div class="col-lg col-md justify-content-end d-flex ">
+                <div class="col-lg-9 col-md-10 home-thumb">
+                    <a class="btn btn-primary btn-block btn-lg" href="{{ route('login') }}">Login</a>
+                    <a class="btn btn-dark btn-block btn-lg" href="{{ route('register') }}">Register</a>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+@endsection
+
+@push('page-scripts')
+    <script type="text/javascript">
+        const app = new Vue({
+            delimiters: ['${', '}'],
+            el: '#landing',
+            data: {
+                error: null,
+                intros: [
+                    {h: "Welcome to FreeMe Social",p: "A media sharing app"}, 
+                    {h: "Share experiences with friends &Family", p: "Customize who to share posts with"}, 
+                    {h: "Create lasting memories", p:"Your content stays with us secure and as long as you want"}
+                ],
+                introShow: 0,
+                currentIntro: null
+            },
+            created() {
+                this.currentIntro = this.intros[0]
+            },
+            updated() {
+                
+               
+            },
+            methods: {
+                changeIntro: function () {
+                    var n = this.intros.length;
+                    var i;
+                    if (this.introShow + 1 == n) {
+                        i = 0;
+                        this.introShow = 0;
+                    } else {
+                        i = this.introShow + 1;
+                        this.introShow++;
+                    }
+                    this.currentIntro = this.intros[i];
+                }
+            }
+        });
+    </script>
+@endpush
+    
