@@ -54,5 +54,57 @@ class User extends Authenticatable
     public function getProfileImage() {
         return asset('/images/avatar.png');
     }
+
+    /**
+     * Get Family of user
+     *
+     * @return Object
+     */
+    public function ownFamily() {
+        return $this->ownGroups()->where('type', 'family')->first();
+    }
+
+    /**
+     * Get Friends of user
+     *
+     * @return Object
+     */
+    public function ownFriends() {
+        return $this->ownGroups()->where('type', 'friends')->first();
+    }
+
+
+    /**
+     * Relationships
+     */
+    /**
+     * Groups User owns
+     */
+    public function ownGroups() {
+        return $this->hasMany(Group::class, 'owner');
+    }
+    /**
+     * Groups user belongs to
+     */
+    public function groups() {
+        return $this->belongsToMany(Group::class);
+    }
+    /**
+     * User's own posts
+     */
+    public function ownPosts() {
+        return $this->hasMany(Media::class, 'poster');
+    }
+    /**
+     * Posts user has access to via groups he is associated with
+     */
+    public function posts() {
+        return Media
+            ::join('group_medias', 'medias.id', '=', 'group_medias.media_id')
+            ->join('groups', 'group_medias.group_id', '=', 'groups.id')
+            ->join('group_users', 'groups.id', '=', 'group_users.group_id')
+            ->join('users', 'group_users.user_id', '=', 'users.id')
+            ->where('deals.id', $this->id);
+    }
 }
 

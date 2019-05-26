@@ -8,24 +8,24 @@
                 <li class="list-group-item list-group-item-very-dark text-white justify-content-between">
                     <div class="row">
                         <div class="col-lg-1 col-md-2 col-sm-2 col-2">
-                                <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle very-small-circle"/>
+                                <img src="{{ asset(Auth::user()->getProfileImage()) }}" class="img-responsive rounded-circle very-small-circle"/>
                         </div>
                         <div class="col-lg-11 col-md-10 col-sm-10 col-10">
-                            <form>
+                            <form v-on:submit.prevent="uploadMedia">
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Enter New Post Description" v-on:focus="showNewPostButtons = true">
+                                    <input class="form-control" v-model="uploadData.description" placeholder="Enter New Post Description" v-on:focus="showNewPostButtons = true">
                                 </div>
                                 <div class="form-group" v-show="showNewPostButtons">
-                                    <select name="restriction">
+                                    <select v-model="uploadData.restriction">
                                         <option value="public">Public</option>
-                                        <option value="friend">Friend</option>
+                                        <option value="friends">Friends</option>
                                         <option value="family">Family</option>
                                         <option value="freind-family">Friends and Family</option>
                                     </select>
-                                    <button class="file btn btn-primary">
-                                            <input hidden type="file" name="file"/>
+                                    <span class="file btn btn-primary">
+                                            <input type="file" v-on:change="handleFileUpload" ref="file"/>
                                             <i class="fa fa-camera"></i>
-                                    </button>
+                                    </span>
 
                                     <button type="submit" class="btn btn-light">
                                         New Post
@@ -36,9 +36,12 @@
                         </div>
                     </div>
                 </li>
-                <!--li class="list-group-item">
-                        intendted for new posts
-                </li-->
+                <li class="list-group-item" :class="alertClass" v-show="alert">
+                 <strong>${ alert }</strong>
+                    <button type="button" v-on:click="alert = null" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </li>
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-8">
@@ -285,6 +288,9 @@
             error: null,
             showFamilies: true,
             showNewPostButtons: false,
+            uploadData: {description: null, file:null, restriction: "public"},
+            alert: null,
+            alertClass: "list-group-item-danger" /**list-group-item-warning list-group-item-info list-group-item-success */
         },
         created() {
             if (window.innerWidth < 577) {
@@ -296,7 +302,34 @@
             
         },
         methods: {
-            
+            uploadMedia: function() {
+                if(this.uploadData.description && this.uploadData.media && this.uploadData.restriction) {
+                    let formData = new FormData();
+                    formData.append('description', this.uploadData.description);
+                    formData.append('media', this.uploadData.media);
+                    formData.append('restriction', this.uploadData.restriction);
+                    let vm = this;
+                    axios.post( '/media/upload', formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }).then(function(response){
+                        vm.alert = response.data;
+                        vm.alertClass= "list-group-item-info";
+                    })
+                    .catch(function(){
+                        vm.alert = "An error Occured";
+                        vm.alertClass= "list-group-item-danger"
+                    });
+                } else {
+                    this.alert = "All fields must be filled";
+                    this.alertClass= "list-group-item-danger"
+                }
+            },
+            handleFileUpload: function() {
+                this.uploadData.media = this.$refs.file.files[0];
+            }
         }
     });
 </script>
