@@ -94,47 +94,23 @@ class User extends Authenticatable
 
     
     public function getUserPublicPosts() {
-        $postDetails = $this->ownPosts()->where('is_trashed', 0)->where('is_archived', 0)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at']);
-        $userDetails = [
-            'poster_name' => $this->name,
-            'poster_username' => $this->username,
-            'poster_email' => $this->email,
-            'profile_picture' => $this->profile_picture
-        ];
-        if (!empty($postDetails->first())) {
-            $postDetails = array_merge((array)$postDetails,$userDetails);
-        }
-        
-        return $postDetails;
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 0)->where('is_archived', 0)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
+    }
+
+    public function getAllUserPosts() {
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 0)->where('is_archived', 0)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
     }
 
     public function getUserArchives() {
-        $postDetails = $this->ownPosts()->where('is_trashed', 0)->where('is_archived', 1)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at']);
-        $userDetails = [
-            'poster_name' => $this->name,
-            'poster_username' => $this->username,
-            'poster_email' => $this->email,
-            'profile_picture' => $this->profile_picture
-        ];
-        if (!empty($postDetails->first())) {
-            $postDetails = array_merge((array)$postDetails,$userDetails);
-        }
-        return $postDetails;
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 0)->where('is_archived', 1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
     }
 
     public function getUserTrashed() {
-        $postDetails = $this->ownPosts()->where('is_trashed', 1)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at']);
-        $userDetails = [
-            'poster_name' => $this->name,
-            'poster_username' => $this->username,
-            'poster_email' => $this->email,
-            'profile_picture' => $this->profile_picture
-        ];
-        
-        if (!empty($postDetails->first())) {
-            $postDetails = array_merge((array)$postDetails,$userDetails);
-        }
-        return $postDetails;
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
     }
 
     public function getPageOwnerRelationPosts($pageOwner) {

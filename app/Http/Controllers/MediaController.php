@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Media;
+use App\User;
 use Illuminate\Support\Facades\Validator;
 
 class MediaController extends Controller
@@ -91,13 +92,32 @@ class MediaController extends Controller
         return response()->json(["success" => "success"]);
     }
 
+    public function unarchive(Request $request) {
+        $post = Media::find($request->postId);
+        if (is_null($post)) {
+            return response()->json(["error" => "No post found"]);
+        }
+        $post->is_archived = 0;
+        $post->save();
+        return response()->json(["success" => "success"]);
+    }
+
     public function trash(Request $request) {
         $post = Media::find($request->postId);
         if (is_null($post)) {
             return response()->json(["error" => "No post found"]);
         }
         $post->is_trashed = 1;
-        $post->is_archived = 0;
+        $post->save();
+        return response()->json(["success" => "success"]);
+    }
+
+    public function untrash(Request $request) {
+        $post = Media::find($request->postId);
+        if (is_null($post)) {
+            return response()->json(["error" => "No post found"]);
+        }
+        $post->is_trashed = 0;
         $post->save();
         return response()->json(["success" => "success"]);
     }
@@ -143,6 +163,34 @@ class MediaController extends Controller
                 $userFamily->posts()->detach($post);
                 $userFriends->posts()->attach($post);
                 $userFamily->posts()->attach($post);
+                break;
+        }
+    }
+
+    /**
+     * Posts to return when owner of profile page is viewing profile
+     */
+    public function returnUserPosts(Request $request) {
+        $currentUser = User::find($request->currentUser);
+        $pageOwner = User::find($request->pageOwner);
+        $returnData = [];
+        if ($currentUser->id == $pageOwner->id) {
+            $returnData = $pageOwner->getAllUserPosts();
+        } elseif(!empty($this->currentUser->groups()->where('owner', $pageOwner->id)->first()))  {
+            $returnData = $this->currentUser->getPageOwnerRelationPosts($pageOwner);
+        } else {
+            $returnData = $pageOwner->getUserPublicPosts();
+        }
+        switch ($request->type) {
+            case "posts":
+                //chill...
+                return $returnData;
+                break;
+            case "archive":
+                return $this->currentUser->getUserArchives();
+                break;
+            case "trash":
+                return $this->currentUser->getUserTrashed();
                 break;
         }
     }

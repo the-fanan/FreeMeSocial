@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="col-4 justify-content-end d-flex">
-                       `    <div class="dropdown" v-if="post.poster_username == currentUser">
+                       `    <div class="dropdown" v-if="post.poster_id == currentUser">
                                 <button class="btn btn-light dropdown-toggle" type="button" :id="post.post_id + '-post-settings'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     &sdot; &sdot; &sdot;
                                 </button>
@@ -234,7 +234,7 @@
             uploadData: {description: null, file:null, restriction: "public"},
             alert: null,
             alertClass: "list-group-item-danger",
-            currentUser: "{{ Auth::user()->username }}",
+            currentUser: "{{ Auth::user()->id }}",
             posts: _.uniqBy(JSON.parse("{!! addslashes(Auth::user()->homePagePosts()) !!}"), 'post_id'),
             baseMediaUrl: "{{ asset('/') }}",
             showLoadMore: true,
