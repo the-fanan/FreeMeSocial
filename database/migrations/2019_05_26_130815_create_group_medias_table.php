@@ -13,7 +13,7 @@ class CreateGroupMediasTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_medias', function (Blueprint $table) {
+        Schema::create('group_media', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('group_id');
             $table->integer('media_id');

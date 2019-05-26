@@ -73,6 +73,20 @@ class User extends Authenticatable
         return $this->ownGroups()->where('type', 'friends')->first();
     }
 
+    public function createAndAssociateGroups() {
+        //create
+        $family = $this->ownGroups()->create([
+            'type' => 'family',
+            'has_page' => 1
+        ]);
+
+        $friends = $this->ownGroups()->create([
+            'type' => 'friends',
+        ]);
+        //associate
+        $this->groups()->attach($family);
+        $this->groups()->attach($friends);
+    }
 
     /**
      * Relationships
@@ -100,10 +114,10 @@ class User extends Authenticatable
      */
     public function posts() {
         return Media
-            ::join('group_medias', 'medias.id', '=', 'group_medias.media_id')
-            ->join('groups', 'group_medias.group_id', '=', 'groups.id')
-            ->join('group_users', 'groups.id', '=', 'group_users.group_id')
-            ->join('users', 'group_users.user_id', '=', 'users.id')
+            ::join('group_medias', 'medias.id', '=', 'group_media.media_id')
+            ->join('groups', 'group_media.group_id', '=', 'groups.id')
+            ->join('group_users', 'groups.id', '=', 'group_user.group_id')
+            ->join('users', 'group_user.user_id', '=', 'users.id')
             ->where('deals.id', $this->id);
     }
 }

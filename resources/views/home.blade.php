@@ -316,7 +316,7 @@
                         }
                     }).then(function(response){
                         vm.alert = response.data;
-                        vm.alertClass= "list-group-item-info";
+                        vm.alertClass= "list-group-item-info"
                     })
                     .catch(function(){
                         vm.alert = "An error Occured";
