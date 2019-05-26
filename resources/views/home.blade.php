@@ -20,7 +20,7 @@
                                         <option value="public">Public</option>
                                         <option value="friends">Friends</option>
                                         <option value="family">Family</option>
-                                        <option value="freind-family">Friends and Family</option>
+                                        <option value="freinds-family">Friends and Family</option>
                                     </select>
                                     <span class="file btn btn-primary">
                                             <input type="file" v-on:change="handleFileUpload" ref="file"/>

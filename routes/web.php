@@ -19,6 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/test', 'MediaController@test');
 Route::group(["prefix" => "user"], function () {
     Route::get("/{user}", "UserController@index")->name('user-profile');
 });

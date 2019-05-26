@@ -18,6 +18,7 @@ class CreateMediasTable extends Migration
             $table->integer('poster');
             $table->enum('type', ['image', 'video']);
             $table->string('url');
+            $table->string('description',1000);
             $table->boolean('is_trashed')->default(0);
             $table->boolean('is_archived')->default(0);
             $table->boolean('is_public')->default(0);

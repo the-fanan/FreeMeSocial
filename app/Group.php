@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
+    protected $table = 'groups';
     /**
      * The attributes that are mass assignable.
      *
@@ -33,6 +34,6 @@ class Group extends Model
     }
 
     public function posts() {
-        return $this->belongsToMany(Media::class);
+        return $this->belongsToMany(Media::class, 'group_media');
     }
 }

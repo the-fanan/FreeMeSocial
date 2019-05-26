@@ -38,10 +38,46 @@ class MediaController extends Controller
             return response()->json(['message' => 'Post no uploaded! Ensure all fields are filled and image or video is being uploaded.', 'alertClass' => 'list-group-item-danger']);
         }
 
+        $is_publlic = 0;
+        if ($request->restriction == "public") {
+            $is_public = 1;
+        }
+        //upload file
         $mediaMimeType = $request->media->getMimeType();
         $mimeParts = explode("/", $mediaMimeType);
         $url = $this->uploadFile($request->media);
-        return response()->json(['message' => 'Post succesfuly added. ' . $request->media->extension(), 'alertClass' => 'list-group-item-success']);
+        //create post
+        $post = $this->currentUser->ownPosts()->create([
+            'description' => $request->description,
+            'type' => $mimeParts[0],
+            'url' => $url,
+            'is_public' => $is_public
+        ]);
+        //attach to groups based on permission
+        /**
+         * public is still placed here to ensure thay=t family and freinds are included in a public post
+         */
+        $userFriends = $this->currentUser->ownFriends();
+        $userFamily = $this->currentUser->ownFamily();
+        //return response()->json(['message' => json_encode($userFamily), 'alertClass' => 'list-group-item-success']);
+        switch ($request->restriction) {
+            case "public":
+                $userFriends->posts()->attach($post);
+                $userFamily->posts()->attach($post);
+                break;
+            case "friends":
+                $userFriends->posts()->attach($post);
+                break;
+            case "family":
+                $userFamily->posts()->attach($post);
+                break;
+            case "freinds-family":
+                $userFriends->posts()->attach($post);
+                $userFamily->posts()->attach($post);
+                break;
+        }
+        
+        return response()->json(['message' => 'Post succesfuly added.', 'alertClass' => 'list-group-item-success']);
     }
 
     /**
@@ -52,5 +88,9 @@ class MediaController extends Controller
         $savePath = "uploads/" . $fileName;
         $resource->storeAs("uploads/", $fileName);
         return $savePath;
+    }
+
+    public function test() {
+        return $this->currentUser->ownFamily()->id;
     }
 }
