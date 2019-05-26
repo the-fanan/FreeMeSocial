@@ -19,7 +19,9 @@ class MediaController extends Controller
         });
     }
 
-
+    /**
+     * Functions related to routes
+     */
     public function upload(Request $request) {
         if (empty($this->currentUser->ownGroups()->first())) {
            //user has no group yet so create family and friends group
@@ -35,8 +37,20 @@ class MediaController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => 'Post no uploaded! Ensure all fields are filled and image or video is being uploaded.', 'alertClass' => 'list-group-item-danger']);
         }
+
         $mediaMimeType = $request->media->getMimeType();
         $mimeParts = explode("/", $mediaMimeType);
-        return response()->json(['message' => 'Post succesfuly added.', 'alertClass' => 'list-group-item-success']);
+        $url = $this->uploadFile($request->media);
+        return response()->json(['message' => 'Post succesfuly added. ' . $request->media->extension(), 'alertClass' => 'list-group-item-success']);
+    }
+
+    /**
+     * Functions not related to routes
+     */
+    public function uploadFile($resource) {
+        $fileName = time() . str_random(4) . "." .  $resource->extension();
+        $savePath = "uploads/" . $fileName;
+        $resource->storeAs("uploads/", $fileName);
+        return $savePath;
     }
 }
