@@ -339,6 +339,12 @@ section {
   width: 100%;
   height: 100%;
 }
+.user-main-posts {
+  padding-top: 20px;
+}
+.profile-nav {
+  z-index: 5;
+}
 /*--------------------------------------------
 	Register styling
 ---------------------------------------------*/
