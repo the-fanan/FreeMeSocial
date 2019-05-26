@@ -1,6 +1,6 @@
 <!-- NavBar -->
 <nav class="navbar navbar-dark navbar-expand-lg navbar-expand-md  bg-dark shadow-sm navbar-fixed-top">
-		<a class="navbar-brand" href="/"><span class="logo">FreeMe Social</span></a>
+		<a class="navbar-brand" href="/home"><span class="logo">FreeMe Social</span></a>
 		
 		<button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
 				<span class="navbar-toggler-icon"></span>
