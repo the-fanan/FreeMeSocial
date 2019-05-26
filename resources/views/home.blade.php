@@ -310,7 +310,7 @@
                 let vm = this;
                 axios.post('/media/restrict',
                 {
-                    retriction: "public",
+                    restriction: "public",
                     postId: postId
                 }).then(function(){
                     vm.alert = "Post visibility set to Public.";
@@ -325,7 +325,7 @@
                 let vm = this;
                 axios.post('/media/restrict',
                 {
-                    retriction: "friends",
+                    restriction: "friends",
                     postId: postId
                 }).then(function(){
                     vm.alert = "Post visibility set to Friends.";
@@ -339,7 +339,7 @@
                 let vm = this;
                 axios.post('/media/restrict',
                 {
-                    retriction: "family",
+                    restriction: "family",
                     postId: postId
                 }).then(function(){
                     vm.alert = "Post visibility set to Family.";
@@ -353,7 +353,7 @@
                 let vm = this;
                 axios.post('/media/restrict',
                 {
-                    retriction: "friends-family",
+                    restriction: "friends-family",
                     postId: postId
                 }).then(function(){
                     vm.alert = "Post visibility set to Friends And Family.";

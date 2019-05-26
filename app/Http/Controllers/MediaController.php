@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Media;
 use Illuminate\Support\Facades\Validator;
 
 class MediaController extends Controller
@@ -81,15 +82,68 @@ class MediaController extends Controller
     }
 
     public function archive(Request $request) {
-
+        $post = Media::find($request->postId);
+        if (is_null($post)) {
+            return response()->json(["error" => "No post found"]);
+        }
+        $post->is_archived = 1;
+        $post->save();
+        return response()->json(["success" => "success"]);
     }
 
     public function trash(Request $request) {
-
+        $post = Media::find($request->postId);
+        if (is_null($post)) {
+            return response()->json(["error" => "No post found"]);
+        }
+        $post->is_trashed = 1;
+        $post->save();
+        return response()->json(["success" => "success"]);
     }
 
     public function restrict(Request $request) {
-        
+        $post = Media::find($request->postId);
+        if (is_null($post)) {
+            return response()->json(["error" => "No post found"]);
+        }
+
+        $userFriends = $this->currentUser->ownFriends();
+        $userFamily = $this->currentUser->ownFamily();
+
+        switch ($request->restriction) {
+            case "public":
+                $post->is_public = 1;
+                $post->save();
+                $userFriends->posts()->detach($post);
+                $userFamily->posts()->detach($post);
+                $userFriends->posts()->attach($post);
+                $userFamily->posts()->attach($post);
+                break;
+            case "friends":
+                $post->is_public = 0;
+                $post->save();
+                $userFriends->posts()->detach($post);
+                $userFamily->posts()->detach($post);
+
+                $userFriends->posts()->attach($post);
+                
+                break;
+            case "family":
+                $post->is_public = 0;
+                $post->save();
+                $userFriends->posts()->detach($post);
+                $userFamily->posts()->detach($post);
+                $userFamily->posts()->attach($post);
+                break;
+            case "freinds-family":
+                $post->is_public = 0;
+                $post->save();
+                $userFriends->posts()->detach($post);
+                $userFamily->posts()->detach($post);
+                $userFriends->posts()->attach($post);
+                $userFamily->posts()->attach($post);
+                break;
+        }
     }
 
     /**
