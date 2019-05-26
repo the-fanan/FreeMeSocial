@@ -8,7 +8,7 @@
                 <li class="list-group-item list-group-item-very-dark text-white justify-content-between">
                     <div class="row">
                         <div class="col-lg-1 col-md-2 col-sm-2 col-2">
-                                <img src="{{ asset(Auth::user()->getProfileImage()) }}" class="img-responsive rounded-circle very-small-circle"/>
+                                <a href="/user/{{ Auth::user()->username }}"><img src="{{ asset(Auth::user()->getProfileImage()) }}" class="img-responsive rounded-circle very-small-circle"/></a>
                         </div>
                         <div class="col-lg-11 col-md-10 col-sm-10 col-10">
                             <form v-on:submit.prevent="uploadMedia">
@@ -42,12 +42,12 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </li>
-                <li class="list-group-item" v-for="(post,index) in posts" v-bind:key="post.post_id">
+                <li class="list-group-item" v-cloak v-for="(post,index) in posts" v-bind:key="post.post_id">
                     <div class="row">
                         <div class="col-8">
                             <div class="row justify-content-start">
                                 <div class="col-2 col-lg-1 col-md-2 col-sm-2">
-                                    <img :src="baseMediaUrl + post.profile_picture" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
+                                    <a :href="'user/' + post.poster_username"><img :src="baseMediaUrl + post.profile_picture" class="img-responsive rounded-circle border border-secondary very-small-circle"/></a>
                                 </div>
 
                                 <div class="col-10 col-lg-11 col-md-10 col-sm-10">
@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="col-4 justify-content-end d-flex">
-                       `    <div class="dropdown" v-if="post.poster_username == currentUser">
+                       `    <div class="dropdown" v-if="post.poster_id == currentUser">
                                 <button class="btn btn-light dropdown-toggle" type="button" :id="post.post_id + '-post-settings'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     &sdot; &sdot; &sdot;
                                 </button>
@@ -107,83 +107,29 @@
                         <li class="list-group-item list-group-item-very-dark text-white d-flex justify-content-between">
                         Your Families
 
-                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createFamilyModal">Create</button>
+                        <!--button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createFamilyModal">Create</button-->
                         </li>
+                        @foreach(Auth::user()->groups()->where('type','family')->get() as $family)
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-12">
                                     <h6 class="text-dark">
-                                        <a href="#" class="text-dark">The Abayomi's</a>
+                                        <a href="#" class="text-dark">{{ $family->owner->name }}</a>
                                     </h6>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
+                                    @foreach($family->members as $member)
                                     <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                        <img src="{{ $member->getProfileImage() }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
+                                        <p>{{ $member->username }}</p>
                                     </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
+                                    @endforeach
                                 </div>
                             </div>    
                         </li>
-
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h6 class="text-dark">
-                                        The Akinyomi's
-                                    </h6>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                    <a href="#">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-primary very-small-circle"/>
-                                    </a>
-                                </div>
-                            </div>    
-                        </li>
+                        @endforeach
                 </ul>
             </div>
         </transition>
@@ -234,7 +180,7 @@
             uploadData: {description: null, file:null, restriction: "public"},
             alert: null,
             alertClass: "list-group-item-danger",
-            currentUser: "{{ Auth::user()->username }}",
+            currentUser: "{{ Auth::user()->id }}",
             posts: _.uniqBy(JSON.parse("{!! addslashes(Auth::user()->homePagePosts()) !!}"), 'post_id'),
             baseMediaUrl: "{{ asset('/') }}",
             showLoadMore: true,

@@ -28,4 +28,7 @@ Route::group(["prefix" => "media"], function () {
     Route::post("/archive", "MediaController@archive");
     Route::post("/trash", "MediaController@trash");
     Route::post("/restrict", "MediaController@restrict");
+    Route::post("/unarchive", "MediaController@unarchive");
+    Route::post("/untrash", "MediaController@untrash");
+    Route::post("/load", "MediaController@returnUserPosts");
 });

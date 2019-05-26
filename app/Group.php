@@ -30,7 +30,7 @@ class Group extends Model
     }
 
     public function owner() {
-        return $this->belongsTo(User::class, 'owner');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     public function posts() {
