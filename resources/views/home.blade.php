@@ -36,119 +36,62 @@
                         </div>
                     </div>
                 </li>
-                <li class="list-group-item" :class="alertClass" v-show="alert">
+                <li class="list-group-item" :class="alertClass" v-show="alert" v-cloak>
                  <strong>${ alert }</strong>
                     <button type="button" v-on:click="alert = null" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" v-for="(post,index) in posts" v-bind:key="post.post_id">
                     <div class="row">
                         <div class="col-8">
                             <div class="row justify-content-start">
                                 <div class="col-2 col-lg-1 col-md-2 col-sm-2">
-                                    <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
+                                    <img :src="baseMediaUrl + post.profile_picture" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
                                 </div>
 
                                 <div class="col-10 col-lg-11 col-md-10 col-sm-10">
-                                    <h4 clas="text-body">The_fanan</h4>
+                                    <h4 clas="text-body">${ post.poster_username }</h4>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-4 justify-content-end d-flex">
-                       `    <div class="dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="idofpost-post-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       `    <div class="dropdown" v-if="post.poster_username == currentUser">
+                                <button class="btn btn-light dropdown-toggle" type="button" :id="post.post_id + '-post-settings'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     &sdot; &sdot; &sdot;
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="idofpost-post-settings">
-                                    <a class="dropdown-item" href="#">Archive</a>
-                                    <a class="dropdown-item" href="#">Delete</a>
+                                <div class="dropdown-menu" :aria-labelledby="post.post_id + '-post-settings'">
+                                    <a class="dropdown-item" href="#" v-on:click.prevent="archivePost(post.post_id,index)">Archive</a>
+                                    <a class="dropdown-item" href="#" v-on:click.prevent="trashPost(post.post_id,index)">Delete</a>
                                     <div class="dropdown-divider"></div>
                                     <h6 class="dropdown-header">Restrictions</h6>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Public</a>
-                                    <a class="dropdown-item" href="#">Friends</a>
-                                    <a class="dropdown-item" href="#">Family</a>
-                                    <a class="dropdown-item" href="#">Friends & Family</a>
+                                    <a class="dropdown-item" href="#" v-on:click.prevent="restrictPublic(post.post_id)">Public</a>
+                                    <a class="dropdown-item" href="#" v-on:click.prevent="restrictFriends(post.post_id)">Friends</a>
+                                    <a class="dropdown-item" href="#" v-on:click.prevent="restrictFamily(post.post_id)">Family</a>
+                                    <a class="dropdown-item" href="#" v-on:click.prevent="restrictFriendsAndFamily(post.post_id)">Friends & Family</a>
                                 </div>
                             </div>
-                            <p class="text-muted date">May 04</p>
+                            <p class="text-muted date">${ post.updated_at }</p>
                             
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <p class="text-body">My first Title</p>
+                            <p class="text-body">${ post.description }</p>
                             <div class="image-cover rounded">
-                                    <img class="rounded img-responsive" src="{{ asset('images/orange-jelly.jpg') }}"/>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </li>
-                {{ json_encode(Auth::user()->homePagePosts()) }}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="row justify-content-start">
-                                <div class="col-2 col-lg-1 col-md-2 col-sm-2">
-                                    <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
-                                </div>
+                                    <img v-if="post.file_type == 'image'" class="rounded img-responsive" :src="baseMediaUrl + post.file_url"/>
 
-                                <div class="col-10 col-lg-11 col-md-10 col-sm-10">
-                                    <h4 class="text-body">Anike</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-4 justify-content-end d-flex">
-                            <p class="text-muted">May 07</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <p class="text-body">My first post</p>
-                            <div class="image-cover rounded">
-                                    <img class="rounded img-responsive" src="{{ asset('images/fine-girl.jpg') }}"/>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </li>
-
-                <li class="list-group-item">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="row justify-content-start">
-                                    <div class="col-2 col-lg-1 col-md-2 col-sm-2">
-                                        <img src="{{ asset('images/avatar.png') }}" class="img-responsive rounded-circle border border-secondary very-small-circle"/>
-                                    </div>
-    
-                                    <div class="col-10 col-lg-11 col-md-10 col-sm-10">
-                                        <h4 class="text-body">Anike</h4>
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="col-4 justify-content-end d-flex">
-                                <p class="text-muted">May 07</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p class="text-body">My first post</p>
-                                <div class="image-cover rounded">
-                                    <video controls>
-                                        <source src="{{ asset('images/naruto.mp4') }}" type="video/mp4">
+                                    <video controls v-else>
+                                        <source :src="baseMediaUrl + post.file_url" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video> 
-                                </div>
-                                
                             </div>
+                            
                         </div>
-                    </li>
-    
+                    </div>
+                </li>
             </ul>
             <button class="btn btn-block btn-dark load-more btn-lg">Load More</button>
        </div>
@@ -290,7 +233,10 @@
             showNewPostButtons: false,
             uploadData: {description: null, file:null, restriction: "public"},
             alert: null,
-            alertClass: "list-group-item-danger" /**list-group-item-warning list-group-item-info list-group-item-success */
+            alertClass: "list-group-item-danger",
+            currentUser: "{{ Auth::user()->username }}",
+            posts: _.uniqBy(JSON.parse("{!! addslashes(Auth::user()->homePagePosts()) !!}"), 'post_id'),
+            baseMediaUrl: "{{ asset('/') }}"
         },
         created() {
             if (window.innerWidth < 577) {
@@ -329,6 +275,24 @@
             },
             handleFileUpload: function() {
                 this.uploadData.media = this.$refs.file.files[0];
+            },
+            archivePost: function(postId,index) {
+                alert("post archived " + index)
+            },
+            trashPost: function(postId,index) {
+                alert("post trashed " + index)
+            },
+            restrictPublic: function(postId) {
+                alert("post publiced " + postId)
+            },
+            restrictFriends: function(postId) {
+                alert("post friend " + postId)
+            },
+            restrictFamily: function(postId) {
+                alert("post family " + postId)
+            },
+            restrictFriendsAndFamily: function(postId) {
+                alert("post friends family " + postId)
             }
         }
     });
