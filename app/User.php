@@ -89,7 +89,56 @@ class User extends Authenticatable
     }
 
     public function homePagePosts() {
-        return $this->posts()->where('is_trashed', 0)->where('is_archived', 0)->limit(20)->get();
+        return $this->posts()->where('is_trashed', 0)->where('is_archived', 0)->get();
+    }
+
+    
+    public function getUserPublicPosts() {
+        $postDetails = $this->ownPosts()->where('is_trashed', 0)->where('is_archived', 0)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at']);
+        $userDetails = [
+            'poster_name' => $this->name,
+            'poster_username' => $this->username,
+            'poster_email' => $this->email,
+            'profile_picture' => $this->profile_picture
+        ];
+        if (!empty($postDetails->first())) {
+            $postDetails = array_merge((array)$postDetails,$userDetails);
+        }
+        
+        return $postDetails;
+    }
+
+    public function getUserArchives() {
+        $postDetails = $this->ownPosts()->where('is_trashed', 0)->where('is_archived', 1)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at']);
+        $userDetails = [
+            'poster_name' => $this->name,
+            'poster_username' => $this->username,
+            'poster_email' => $this->email,
+            'profile_picture' => $this->profile_picture
+        ];
+        if (!empty($postDetails->first())) {
+            $postDetails = array_merge((array)$postDetails,$userDetails);
+        }
+        return $postDetails;
+    }
+
+    public function getUserTrashed() {
+        $postDetails = $this->ownPosts()->where('is_trashed', 1)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at']);
+        $userDetails = [
+            'poster_name' => $this->name,
+            'poster_username' => $this->username,
+            'poster_email' => $this->email,
+            'profile_picture' => $this->profile_picture
+        ];
+        
+        if (!empty($postDetails->first())) {
+            $postDetails = array_merge((array)$postDetails,$userDetails);
+        }
+        return $postDetails;
+    }
+
+    public function getPageOwnerRelationPosts($pageOwner) {
+        return $this->posts()->where('is_trashed', 0)->where('is_archived', 0)->where('poster', $pageOwner->id)->get();
     }
     /**
      * Relationships

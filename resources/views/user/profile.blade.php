@@ -34,7 +34,7 @@
 		<div class="row justify-content-center user-main-posts">
 			<div class="col-8">
 				<ul class="list-group">
-				
+						{{ json_encode($props["pageOwner"]->getUserArchives()) }}
 							<component  v-bind:is="currentTab" v-for="(post, index) in currentTabData" v-bind:key="index" v-bind:post="post"></component>
 				
 				</ul>
@@ -147,8 +147,8 @@
 						trashed: ['t1'],
 						currentTab: "posts-component",
 						currentTabData: [1,2,3,4,5],
-						currentUser: "{{ $props['currentUser']->username }}",
-						pageOwner: "{{ $props['pageOwner']->username }}"
+						currentUser: "{{ $props['currentUser']->id }}",
+						pageOwner: "{{ $props['pageOwner']->id }}"
         },
         created() {
             if (window.innerWidth < 577) {

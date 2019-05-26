@@ -97,6 +97,7 @@ class MediaController extends Controller
             return response()->json(["error" => "No post found"]);
         }
         $post->is_trashed = 1;
+        $post->is_archived = 0;
         $post->save();
         return response()->json(["success" => "success"]);
     }

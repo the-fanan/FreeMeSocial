@@ -1,1 +1,3 @@
 --- set max upload size and post max size to 200 when migrating to heroku
+
+{"post_id":1,"description":"My first picture upload","file_url":"uploads\/1558895825Tzve.png","file_type":"image","created_at":"13 minutes ago","updated_at":"13 minutes ago","poster_name":"Fanan Dala","poster_id":1,"poster_username":"the_fanan","poster_email":"fanan.dala@yahoo.com","profile_picture":"images\/fine-girl.jpg"},{"post_id":2,"description":"My first video upload","file_url":"uploads\/1558895846WIqC.mp4","file_type":"video","created_at":"13 minutes ago","updated_at":"13 minutes ago","poster_name":"Fanan Dala","poster_id":1,"poster_username":"the_fanan","poster_email":"fanan.dala@yahoo.com","profile_picture":"images\/fine-girl.jpg"}
