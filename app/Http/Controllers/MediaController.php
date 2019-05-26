@@ -90,7 +90,4 @@ class MediaController extends Controller
         return $savePath;
     }
 
-    public function test() {
-        return $this->currentUser->ownFamily()->id;
-    }
 }

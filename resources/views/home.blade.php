@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </li>
-
+                {{ json_encode(Auth::user()->homePagePosts()) }}
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-8">
