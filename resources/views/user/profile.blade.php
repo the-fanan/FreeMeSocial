@@ -4,7 +4,7 @@
 <div class="profile-container">
 	<div class="user-header">
 		<div class="user-header-profile-image-holder border rounded-circle border-white shadow">
-			<img class="" src="{{ asset('images/fine-girl.jpg') }}"/>
+			<img class="" src="{{ $props['pageOwner']->getProfileImage() }}"/>
 		</div>
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary position-relative profile-nav">
