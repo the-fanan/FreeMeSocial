@@ -315,8 +315,8 @@
                             'Content-Type': 'multipart/form-data'
                         }
                     }).then(function(response){
-                        vm.alert = response.data;
-                        vm.alertClass= "list-group-item-info"
+                        vm.alert = response.data.message;
+                        vm.alertClass= response.data.alertClass;//"list-group-item-info"
                     })
                     .catch(function(){
                         vm.alert = "An error Occured";
