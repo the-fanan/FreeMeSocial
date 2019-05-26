@@ -33,6 +33,7 @@ class UserController extends Controller
         if (is_null($pageOwner)) {
             return view('errors.404');
         }
-        return view('user.profile');
+        $props = ['pageOwner' => $pageOwner, 'currentUser' => $this->currentUser];
+        return view('user.profile', compact('props'));
     }
 }
