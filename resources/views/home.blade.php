@@ -93,7 +93,7 @@
                     </div>
                 </li>
             </ul>
-            <button class="btn btn-block btn-dark load-more btn-lg">Load More</button>
+            <button class="btn btn-block btn-dark load-more btn-lg" v-on:click="loadMore" v-cloak v-show="showLoadMore">${ loadMoreText }</button>
        </div>
 
        <transition name="family-column-transition"
@@ -236,7 +236,9 @@
             alertClass: "list-group-item-danger",
             currentUser: "{{ Auth::user()->username }}",
             posts: _.uniqBy(JSON.parse("{!! addslashes(Auth::user()->homePagePosts()) !!}"), 'post_id'),
-            baseMediaUrl: "{{ asset('/') }}"
+            baseMediaUrl: "{{ asset('/') }}",
+            showLoadMore: true,
+            loadMoreText: "Load More"
         },
         created() {
             if (window.innerWidth < 577) {
@@ -266,34 +268,106 @@
                     })
                     .catch(function(){
                         vm.alert = "An error Occured";
-                        vm.alertClass= "list-group-item-danger"
+                        vm.alertClass= "list-group-item-danger";
                     });
                 } else {
                     this.alert = "All fields must be filled";
-                    this.alertClass= "list-group-item-danger"
+                    this.alertClass= "list-group-item-danger";
                 }
             },
             handleFileUpload: function() {
                 this.uploadData.media = this.$refs.file.files[0];
             },
             archivePost: function(postId,index) {
-                alert("post archived " + index)
+                let vm = this;
+                axios.post('/media/archive',
+                {
+                    postId: postId
+                }).then(function(){
+                    vm.posts.splice(index, 1);
+                    vm.alert = "Post archived successfully";
+                    vm.alertClass= "list-group-item-success";
+                }).catch(function(){
+                    vm.alert = "An error Occured";
+                    vm.alertClass= "list-group-item-danger";
+                });
             },
             trashPost: function(postId,index) {
-                alert("post trashed " + index)
+                let vm = this;
+                axios.post('/media/trash',
+                {
+                    postId: postId
+                }).then(function(){
+                    vm.posts.splice(index, 1);
+                    vm.alert = "Post Deleted!";
+                    vm.alertClass= "list-group-item-warning"
+                }).catch(function(){
+                    vm.alert = "An error Occured";
+                    vm.alertClass= "list-group-item-danger";
+                }); 
             },
             restrictPublic: function(postId) {
-                alert("post publiced " + postId)
+                let vm = this;
+                axios.post('/media/restrict',
+                {
+                    retriction: "public",
+                    postId: postId
+                }).then(function(){
+                    vm.alert = "Post visibility set to Public.";
+                    vm.alertClass= "list-group-item-info";
+                }).catch(function(){
+                    vm.alert = "An error Occured";
+                    vm.alertClass= "list-group-item-danger";
+                });
+                
             },
             restrictFriends: function(postId) {
-                alert("post friend " + postId)
+                let vm = this;
+                axios.post('/media/restrict',
+                {
+                    retriction: "friends",
+                    postId: postId
+                }).then(function(){
+                    vm.alert = "Post visibility set to Friends.";
+                    vm.alertClass= "list-group-item-info";
+                }).catch(function(){
+                    vm.alert = "An error Occured";
+                    vm.alertClass= "list-group-item-danger";
+                });
             },
             restrictFamily: function(postId) {
-                alert("post family " + postId)
+                let vm = this;
+                axios.post('/media/restrict',
+                {
+                    retriction: "family",
+                    postId: postId
+                }).then(function(){
+                    vm.alert = "Post visibility set to Family.";
+                    vm.alertClass= "list-group-item-info";
+                }).catch(function(){
+                    vm.alert = "An error Occured";
+                    vm.alertClass= "list-group-item-danger";
+                });  
             },
             restrictFriendsAndFamily: function(postId) {
-                alert("post friends family " + postId)
+                let vm = this;
+                axios.post('/media/restrict',
+                {
+                    retriction: "friends-family",
+                    postId: postId
+                }).then(function(){
+                    vm.alert = "Post visibility set to Friends And Family.";
+                    vm.alertClass= "list-group-item-info";
+                }).catch(function(){
+                    vm.alert = "An error Occured";
+                    vm.alertClass= "list-group-item-danger";
+                });
+                
+            },
+            loadMore: function() {
+                //request for more if no more say end of posts
             }
+
         }
     });
 </script>

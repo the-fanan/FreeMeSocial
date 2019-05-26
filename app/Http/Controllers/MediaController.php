@@ -80,6 +80,18 @@ class MediaController extends Controller
         return response()->json(['message' => 'Post succesfuly added.', 'alertClass' => 'list-group-item-success']);
     }
 
+    public function archive(Request $request) {
+
+    }
+
+    public function trash(Request $request) {
+
+    }
+
+    public function restrict(Request $request) {
+        
+    }
+
     /**
      * Functions not related to routes
      */
