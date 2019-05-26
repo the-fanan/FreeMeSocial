@@ -54,7 +54,24 @@
                         </div>
 
                         <div class="col-4 justify-content-end d-flex">
-                            <p class="text-muted">May 04</p>
+                       `    <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle" type="button" id="idofpost-post-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    &sdot; &sdot; &sdot;
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="idofpost-post-settings">
+                                    <a class="dropdown-item" href="#">Archive</a>
+                                    <a class="dropdown-item" href="#">Delete</a>
+                                    <div class="dropdown-divider"></div>
+                                    <h6 class="dropdown-header">Restrictions</h6>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Public</a>
+                                    <a class="dropdown-item" href="#">Friends</a>
+                                    <a class="dropdown-item" href="#">Family</a>
+                                    <a class="dropdown-item" href="#">Friends & Family</a>
+                                </div>
+                            </div>
+                            <p class="text-muted date">May 04</p>
+                            
                         </div>
                     </div>
                     <div class="row">
