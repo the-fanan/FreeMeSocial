@@ -176,7 +176,7 @@ class MediaController extends Controller
         $returnData = [];
         if ($currentUser->id == $pageOwner->id) {
             $returnData = $pageOwner->getAllUserPosts();
-        } elseif(!empty($this->currentUser->groups()->where('owner', $pageOwner->id)->first()))  {
+        } elseif(!empty($this->currentUser->groups()->where('owner_id', $pageOwner->id)->first()))  {
             $returnData = $this->currentUser->getPageOwnerRelationPosts($pageOwner);
         } else {
             $returnData = $pageOwner->getUserPublicPosts();
