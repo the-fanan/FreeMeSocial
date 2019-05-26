@@ -85,7 +85,7 @@
 											<div class='col-8'>\
 													<div class='row justify-content-start'>\
 															<div class='col-2 col-lg-1 col-md-2 col-sm-2'>\
-																	<img :src='baseMediaUrl + post.profile_picture' class='img-responsive rounded-circle border border-secondary very-small-circle'/>\
+															<a :href=\"'user/' + post.poster_username\"><img :src='baseMediaUrl + post.profile_picture' class='img-responsive rounded-circle border border-secondary very-small-circle'/></a>\
 															</div>\
 															<div class='col-10 col-lg-11 col-md-10 col-sm-10'>\
 																	<h4 clas='text-body'>${ post.poster_username }</h4>\
@@ -257,7 +257,8 @@
 											<div class='col-8'>\
 													<div class='row justify-content-start'>\
 															<div class='col-2 col-lg-1 col-md-2 col-sm-2'>\
-																	<img :src='baseMediaUrl + post.profile_picture' class='img-responsive rounded-circle border border-secondary very-small-circle'/>\
+															<a :href=\"'user/' + post.poster_username\"><img :src='baseMediaUrl + post.profile_picture' class='img-responsive rounded-circle border border-secondary very-small-circle'/>\
+															</a>\
 															</div>\
 															<div class='col-10 col-lg-11 col-md-10 col-sm-10'>\
 																	<h4 clas='text-body'>${ post.poster_username }</h4>\
@@ -364,7 +365,7 @@
 											<div class='col-8'>\
 													<div class='row justify-content-start'>\
 															<div class='col-2 col-lg-1 col-md-2 col-sm-2'>\
-																	<img :src='baseMediaUrl + post.profile_picture' class='img-responsive rounded-circle border border-secondary very-small-circle'/>\
+															<a :href=\"'user/' + post.poster_username\"><img :src='baseMediaUrl + post.profile_picture' class='img-responsive rounded-circle border border-secondary very-small-circle'/></a>\
 															</div>\
 															<div class='col-10 col-lg-11 col-md-10 col-sm-10'>\
 																	<h4 clas='text-body'>${ post.poster_username }</h4>\

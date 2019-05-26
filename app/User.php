@@ -123,7 +123,7 @@ class User extends Authenticatable
      * Groups User owns
      */
     public function ownGroups() {
-        return $this->hasMany(Group::class, 'owner');
+        return $this->hasMany(Group::class, 'owner_id');
     }
     /**
      * Groups user belongs to
