@@ -270,7 +270,7 @@ section {
 	cursor: pointer;
 }
 /*--------------------------------------------
-	 Home Pags styling
+	 Home Page styling
 ---------------------------------------------*/
 .home-container {
   padding-top: 80px;
@@ -316,6 +316,34 @@ section {
 .load-more {
   margin-top: 20px;
   margin-bottom: 30px;
+}
+/*--------------------------------------------
+	Profile Page styling
+---------------------------------------------*/
+.user-header {
+  background-image: url('../images/user-header.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 10px;
+  padding-top: 80px;
+  height: 300px;
+}
+.user-header-profile-image-holder {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-width: 3px !important;
+}
+
+.user-header-profile-image-holder img {
+  width: 100%;
+  height: 100%;
+}
+.user-main-posts {
+  padding-top: 20px;
+}
+.profile-nav {
+  z-index: 5;
 }
 /*--------------------------------------------
 	Register styling

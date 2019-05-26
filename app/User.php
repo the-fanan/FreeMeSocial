@@ -42,5 +42,17 @@ class User extends Authenticatable
     protected $dates = [
         'created_at', 'updated_at'
     ];
+
+    /**
+     * User functions
+     */
+    /**
+     * Returns full path to user image
+     *
+     * @return string
+     */
+    public function getProfileImage() {
+        return asset('/images/avatar.png');
+    }
 }
 
