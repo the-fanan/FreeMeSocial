@@ -16,7 +16,7 @@ class CreateGroupsTable extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->enum('type', ['friends','family']);
-            $table->integer('owner');
+            $table->integer('owner_id');
             $table->boolean('has_page')->default(0);
             $table->timestamps();
         });

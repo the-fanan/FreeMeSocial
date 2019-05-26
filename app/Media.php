@@ -49,7 +49,7 @@ class Media extends Model
      * Relationships
      */
     public function owner() {
-        return  $this->belongsTo(User::class, 'owner');
+        return  $this->belongsTo(User::class, 'poster');
     }
 
     public function groups() {

@@ -89,7 +89,32 @@ class User extends Authenticatable
     }
 
     public function homePagePosts() {
-        return $this->posts()->where('is_trashed', 0)->where('is_archived', 0)->limit(20)->get();
+        return $this->posts()->where('is_trashed', 0)->where('is_archived', 0)->get();
+    }
+
+    
+    public function getUserPublicPosts() {
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 0)->where('is_archived', 0)->where('is_public',1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
+    }
+
+    public function getAllUserPosts() {
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 0)->where('is_archived', 0)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
+    }
+
+    public function getUserArchives() {
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 0)->where('is_archived', 1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
+    }
+
+    public function getUserTrashed() {
+        $postDetails = $this->ownPosts()->join('users', 'medias.poster', '=', 'users.id')->where('is_trashed', 1)->get(['medias.id as post_id', 'medias.description as description', 'medias.url as file_url', 'medias.type as file_type', 'medias.created_at', 'medias.updated_at', 'users.name as poster_name', 'users.id as poster_id', 'users.username as poster_username', 'users.email as poster_email', 'users.profile_picture']);
+        return $postDetails->toArray();
+    }
+
+    public function getPageOwnerRelationPosts($pageOwner) {
+        return $this->posts()->where('is_trashed', 0)->where('is_archived', 0)->where('poster', $pageOwner->id)->get();
     }
     /**
      * Relationships
@@ -98,7 +123,7 @@ class User extends Authenticatable
      * Groups User owns
      */
     public function ownGroups() {
-        return $this->hasMany(Group::class, 'owner');
+        return $this->hasMany(Group::class, 'owner_id');
     }
     /**
      * Groups user belongs to
