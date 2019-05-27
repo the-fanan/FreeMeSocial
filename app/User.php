@@ -117,6 +117,35 @@ class User extends Authenticatable
         return $this->posts()->where('is_trashed', 0)->where('is_archived', 0)->where('poster', $pageOwner->id)->get();
     }
     /**
+     * Determine if view should show add friend button
+     *
+     * @param [Object] $pageOwner
+     * @return bool
+     */
+    public function shouldShowAddFriend($pageOwner) {
+        if ($this->id != $pageOwner) {
+            if (empty($this->ownFriends()->members()->where('users.id', $pageOwner)->first())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determine if view should show add family button
+     *
+     * @param [Object] $pageOwner
+     * @return bool
+     */
+    public function shouldShowAddFamily($pageOwner) {
+        if ($this->id != $pageOwner) {
+            if (empty($this->ownFamily()->members()->where('users.id', $pageOwner)->first())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
      * Relationships
      */
     /**
