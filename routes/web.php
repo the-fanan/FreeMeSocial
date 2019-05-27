@@ -21,6 +21,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(["prefix" => "user"], function () {
     Route::get("/{user}", "UserController@index")->name('user-profile');
+    Route::post("/add-friend", "UserController@addFriend")->name('add-friend');
+    Route::post("/add-family", "UserController@addFamily")->name('add-family');
 });
 
 Route::group(["prefix" => "media"], function () {
