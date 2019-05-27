@@ -36,6 +36,7 @@
 				<ul class="list-group">
 							<component  v-bind:is="currentTab"></component>
 				</ul>
+				
 			</div>
 		</div>
 	</div>
@@ -52,6 +53,7 @@
 					baseMediaUrl: "{{ asset('/') }}",
 					showLoadMore: true,
 					loadMoreText: "Load More",
+					emptyposts: false,
 					alert: null,
 					alertClass: "list-group-item-danger",
 					currentUser: "{{ Auth::user()->id }}",
@@ -72,6 +74,11 @@
                     vm.alert = "An error Occured";
                     vm.alertClass= "list-group-item-danger";
                 });
+			},
+			updated() {
+				if (this.posts.length == 0){
+					this.emptyposts = true;
+				} 
 			},
 			template: "<span>\
 								<li class='list-group-item' :class='alertClass' v-show='alert' v-cloak>\
@@ -124,7 +131,9 @@
 													</div>\
 											</div>\
                     </div>\
-                	</li>\
+									</li>\
+									<button class='btn btn-block btn-dark load-more btn-lg' v-on:click='loadMore' v-cloak v-show='showLoadMore && !emptyposts'>Load More</button>\
+								<button class='btn btn-block btn-light load-more btn-lg' v-cloak v-show='emptyposts'>There are no posts yet.</button>\
 								</span>",
 								methods: {
 									archivePost: function(postId,index) {
@@ -212,6 +221,9 @@
 													vm.alertClass= "list-group-item-danger";
 											});
 											
+									},
+									loadMore: function() {
+
 									}
 								}
 		});
@@ -225,6 +237,8 @@
 					showLoadMore: true,
 					loadMoreText: "Load More",
 					alert: null,
+					emptyposts: false,
+					showLoadMore: true,
 					alertClass: "list-group-item-danger",
 					currentUser: "{{ Auth::user()->id }}",
 					pageOwner: "{{ $props['pageOwner']->id }}"
@@ -244,6 +258,11 @@
                     vm.alert = "An error Occured";
                     vm.alertClass= "list-group-item-danger";
                 });
+			},
+			updated() {
+				if (this.posts.length == 0){
+					this.emptyposts = true;
+				} 
 			},
 			template: "<span>\
 								<li class='list-group-item' :class='alertClass' v-show='alert' v-cloak>\
@@ -290,7 +309,9 @@
 													</div>\
 											</div>\
                     </div>\
-                	</li>\
+									</li>\
+									<button class='btn btn-block btn-dark load-more btn-lg' v-on:click='loadMore' v-cloak v-show='showLoadMore && !emptyposts'>Load More</button>\
+								<button class='btn btn-block btn-light load-more btn-lg' v-cloak v-show='emptyposts'>There are no posts yet.</button>\
 								</span>",
 								methods: {
 									unArchivePost: function(postId,index) {
@@ -320,6 +341,9 @@
 													vm.alert = "An error Occured";
 													vm.alertClass= "list-group-item-danger";
 											}); 
+									},
+									loadMore: function() {
+
 									}
 								}
 		});
@@ -332,6 +356,7 @@
 					baseMediaUrl: "{{ asset('/') }}",
 					showLoadMore: true,
 					loadMoreText: "Load More",
+					emptyposts: false,
 					alert: null,
 					alertClass: "list-group-item-danger",
 					currentUser: "{{ Auth::user()->id }}",
@@ -352,6 +377,11 @@
                     vm.alert = "An error Occured";
                     vm.alertClass= "list-group-item-danger";
                 });
+			},
+			updated() {
+				if (this.posts.length == 0){
+					this.emptyposts = true;
+				} 
 			},
 			template: "<span>\
 								<li class='list-group-item' :class='alertClass' v-show='alert' v-cloak>\
@@ -396,7 +426,9 @@
 													</div>\
 											</div>\
                     </div>\
-                	</li>\
+									</li>\
+									<button class='btn btn-block btn-dark load-more btn-lg' v-on:click='loadMore' v-cloak v-show='showLoadMore && !emptyposts'>Load More</button>\
+								<button class='btn btn-block btn-light load-more btn-lg' v-cloak v-show='emptyposts'>There are no posts yet.</button>\
 								</span>",
 								methods: {
 									unTrashPost: function(postId,index) {
@@ -412,6 +444,9 @@
 													vm.alert = "An error Occured";
 													vm.alertClass= "list-group-item-danger";
 											}); 
+									},
+									loadMore: function() {
+
 									}
 								}
 		});
@@ -421,7 +456,7 @@
         data: {
             error: null,
             showFamilies: true,
-            showNewPostButtons: false,
+						showNewPostButtons: false,
 						currentTab: "posts-component",
 						currentUser: "{{ $props['currentUser']->id }}",
 						pageOwner: "{{ $props['pageOwner']->id }}"
