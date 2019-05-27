@@ -205,7 +205,10 @@
         },
         methods: {
             uploadMedia: function() {
-                if(this.uploadData.description && this.uploadData.media && this.uploadData.restriction) {
+                if (this.uploadData.media.size > 512) {
+                    this.alert = "File size is too large! Only size of 5MB or les allowed.";
+                    this.alertClass= "list-group-item-danger";
+                }else if(this.uploadData.description && this.uploadData.media && this.uploadData.restriction) {
                     let formData = new FormData();
                     formData.append('description', this.uploadData.description);
                     formData.append('media', this.uploadData.media);
@@ -234,6 +237,10 @@
             },
             handleFileUpload: function() {
                 this.uploadData.media = this.$refs.file.files[0];
+                if (this.uploadData.media.size > 512) {
+                    this.alert = "File size is too large! Only size of 5MB or les allowed.";
+                    this.alertClass= "list-group-item-danger";
+                }
             },
             archivePost: function(postId,index) {
                 let vm = this;
