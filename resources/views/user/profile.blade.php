@@ -135,9 +135,9 @@
 											<div class='col-lg-12'>\
 													<p class='text-body'>${ post.description }</p>\
 													<div class='image-cover rounded'>\
-														<img v-if=\"post.file_type == 'image'\" class='rounded img-responsive' :src='baseMediaUrl + post.file_url'/>\
+														<img v-if=\"post.file_type == 'image'\" class='rounded img-responsive' :src='post.file_url'/>\
 														<video controls v-else>\
-																<source :src='baseMediaUrl + post.file_url' type='video/mp4'>\
+																<source :src='post.file_url' type='video/mp4'>\
 																Your browser does not support the video tag.\
 														</video> \
 													</div>\
@@ -313,9 +313,9 @@
 											<div class='col-lg-12'>\
 													<p class='text-body'>${ post.description }</p>\
 													<div class='image-cover rounded'>\
-														<img v-if=\"post.file_type == 'image'\" class='rounded img-responsive' :src='baseMediaUrl + post.file_url'/>\
+														<img v-if=\"post.file_type == 'image'\" class='rounded img-responsive' :src='post.file_url'/>\
 														<video controls v-else>\
-																<source :src='baseMediaUrl + post.file_url' type='video/mp4'>\
+																<source :src='post.file_url' type='video/mp4'>\
 																Your browser does not support the video tag.\
 														</video> \
 													</div>\
@@ -430,9 +430,9 @@
 											<div class='col-lg-12'>\
 													<p class='text-body'>${ post.description }</p>\
 													<div class='image-cover rounded'>\
-														<img v-if=\"post.file_type == 'image'\" class='rounded img-responsive' :src='baseMediaUrl + post.file_url'/>\
+														<img v-if=\"post.file_type == 'image'\" class='rounded img-responsive' :src='post.file_url'/>\
 														<video controls v-else>\
-																<source :src='baseMediaUrl + post.file_url' type='video/mp4'>\
+																<source :src='post.file_url' type='video/mp4'>\
 																Your browser does not support the video tag.\
 														</video> \
 													</div>\
