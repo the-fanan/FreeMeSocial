@@ -31,14 +31,20 @@ class MediaController extends Controller
            $this->currentUser->createAndAssociateGroups();
         } 
 
+        $fileValidator = Validator::make($request->all(), [
+            "media" => "required|mimetypes:video/3gpp,video/mp4,video/mpeg,video/ogg,video/webm,image/bmp,image/gif,image/jpeg,image/png,image/tiff|max:512",
+        ]);
+        if ($fileValidator->fails()) {
+            return response()->json(['message' => 'Post not uploaded! Ensure media is video or photo and size not more than 5MB', 'alertClass' => 'list-group-item-danger']);
+        }
+
         $validator = Validator::make($request->all(), [
             "description" => "required|max:255|string",
-            "media" => "required|mimetypes:video/3gpp,video/mp4,video/mpeg,video/ogg,video/webm,image/bmp,image/gif,image/jpeg,image/png,image/tiff",
             "restriction" => "required",
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message' => 'Post no uploaded! Ensure all fields are filled and image or video is being uploaded.', 'alertClass' => 'list-group-item-danger']);
+            return response()->json(['message' => 'Post not uploaded! Ensure all fields are filled.', 'alertClass' => 'list-group-item-danger']);
         }
 
         $is_publlic = 0;
