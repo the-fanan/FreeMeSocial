@@ -351,6 +351,10 @@ p.date {
 .profile-nav {
   z-index: 5;
 }
+
+.relationship-button {
+  margin:5px;
+}
 /*--------------------------------------------
 	Register styling
 ---------------------------------------------*/
@@ -413,6 +417,35 @@ footer {
   color: #ffffff;
   transform: scale(1.1);
   top: -5px;
+}
+
+.user-list {
+  padding-top: 50px;
+  padding-bottom: 100px;
+}
+.user-main {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 20px;
+  margin: 10px;
+}
+.image-holder {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+.image-holder img {
+  width: 100%;
+}
+.medium-info {
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  height:120px;
+  padding: 10px;
+}
+.medium-info .name {
+  font-weight: bold;
+  font-size: 18px;
 }
 /*--------------------------------------------
 Page not found

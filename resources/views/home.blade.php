@@ -93,7 +93,8 @@
                     </div>
                 </li>
             </ul>
-            <button class="btn btn-block btn-dark load-more btn-lg" v-on:click="loadMore" v-cloak v-show="showLoadMore">${ loadMoreText }</button>
+            <button class="btn btn-block btn-dark load-more btn-lg" v-on:click="loadMore" v-cloak v-show="showLoadMore && !emptyposts">${ loadMoreText }</button>
+            <button class='btn btn-block btn-light load-more btn-lg' v-cloak v-show='emptyposts'>There are no posts yet.</button>
        </div>
 
        <transition name="family-column-transition"
@@ -176,6 +177,7 @@
         data: {
             error: null,
             showFamilies: true,
+            emptyposts: false,
             showNewPostButtons: false,
             uploadData: {description: null, file:null, restriction: "public"},
             alert: null,
@@ -192,8 +194,14 @@
             }
         },
         updated() {
-            
-            
+            if (this.posts.length == 0){
+                this.emptyposts = true;
+            } 
+        },
+        mounted() {
+            if (this.posts.length == 0){
+                this.emptyposts = true;
+            } 
         },
         methods: {
             uploadMedia: function() {

@@ -27,15 +27,28 @@
 					<a class="nav-link" href="#" v-on:click.prevent="getTrash">Trash</a>
 			</li>
 			@endif
-    </ul>
+		</ul>
+		@if($props["currentUser"]->shouldShowAddFriend($props["pageOwner"]->id))
+		<button class="btn btn-light relationship-button" v-cloak v-if="showAddFriend" v-on:click="addFriend">Add to Friends</button>
+		@endif
+		@if($props["currentUser"]->shouldShowAddFamily($props["pageOwner"]->id))
+		<button class="btn btn-success relationship-button" v-cloak v-if="showAddFamily" v-on:click="addFamily">Add to Family</button>
+		@endif
 	</nav>
 
 	<div class="container">
 		<div class="row justify-content-center user-main-posts">
 			<div class="col-8">
 				<ul class="list-group">
+				<li class='list-group-item' :class='alertClass' v-show='alert' v-cloak>
+                 <strong>${ alert }</strong>
+                    <button type='button' v-on:click='alert = null' class='close' data-dismiss='alert' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                </li>
 							<component  v-bind:is="currentTab"></component>
 				</ul>
+				
 			</div>
 		</div>
 	</div>
@@ -52,6 +65,7 @@
 					baseMediaUrl: "{{ asset('/') }}",
 					showLoadMore: true,
 					loadMoreText: "Load More",
+					emptyposts: false,
 					alert: null,
 					alertClass: "list-group-item-danger",
 					currentUser: "{{ Auth::user()->id }}",
@@ -72,6 +86,11 @@
                     vm.alert = "An error Occured";
                     vm.alertClass= "list-group-item-danger";
                 });
+			},
+			updated() {
+				if (this.posts.length == 0){
+					this.emptyposts = true;
+				} 
 			},
 			template: "<span>\
 								<li class='list-group-item' :class='alertClass' v-show='alert' v-cloak>\
@@ -124,7 +143,9 @@
 													</div>\
 											</div>\
                     </div>\
-                	</li>\
+									</li>\
+									<button class='btn btn-block btn-dark load-more btn-lg' v-on:click='loadMore' v-cloak v-show='showLoadMore && !emptyposts'>Load More</button>\
+								<button class='btn btn-block btn-light load-more btn-lg' v-cloak v-show='emptyposts'>There are no posts yet.</button>\
 								</span>",
 								methods: {
 									archivePost: function(postId,index) {
@@ -212,6 +233,9 @@
 													vm.alertClass= "list-group-item-danger";
 											});
 											
+									},
+									loadMore: function() {
+
 									}
 								}
 		});
@@ -225,6 +249,8 @@
 					showLoadMore: true,
 					loadMoreText: "Load More",
 					alert: null,
+					emptyposts: false,
+					showLoadMore: true,
 					alertClass: "list-group-item-danger",
 					currentUser: "{{ Auth::user()->id }}",
 					pageOwner: "{{ $props['pageOwner']->id }}"
@@ -233,7 +259,7 @@
 			props: [],
 			mounted() {
 				let vm = this;
-				axios.post('/media/load',
+						axios.post('/media/load',
                 {
                     type: "archive",
 										currentUser: vm.currentUser,
@@ -244,6 +270,11 @@
                     vm.alert = "An error Occured";
                     vm.alertClass= "list-group-item-danger";
                 });
+			},
+			updated() {
+				if (this.posts.length == 0){
+					this.emptyposts = true;
+				} 
 			},
 			template: "<span>\
 								<li class='list-group-item' :class='alertClass' v-show='alert' v-cloak>\
@@ -290,7 +321,9 @@
 													</div>\
 											</div>\
                     </div>\
-                	</li>\
+									</li>\
+									<button class='btn btn-block btn-dark load-more btn-lg' v-on:click='loadMore' v-cloak v-show='showLoadMore && !emptyposts'>Load More</button>\
+								<button class='btn btn-block btn-light load-more btn-lg' v-cloak v-show='emptyposts'>There are no posts yet.</button>\
 								</span>",
 								methods: {
 									unArchivePost: function(postId,index) {
@@ -320,6 +353,9 @@
 													vm.alert = "An error Occured";
 													vm.alertClass= "list-group-item-danger";
 											}); 
+									},
+									loadMore: function() {
+
 									}
 								}
 		});
@@ -332,10 +368,11 @@
 					baseMediaUrl: "{{ asset('/') }}",
 					showLoadMore: true,
 					loadMoreText: "Load More",
+					emptyposts: false,
 					alert: null,
 					alertClass: "list-group-item-danger",
 					currentUser: "{{ Auth::user()->id }}",
-					pageOwner: "{{ $props['pageOwner']->id }}"
+					pageOwner: "{{ $props['pageOwner']->id }}",
 				}
 			},
 			props: [],
@@ -352,6 +389,11 @@
                     vm.alert = "An error Occured";
                     vm.alertClass= "list-group-item-danger";
                 });
+			},
+			updated() {
+				if (this.posts.length == 0){
+					this.emptyposts = true;
+				} 
 			},
 			template: "<span>\
 								<li class='list-group-item' :class='alertClass' v-show='alert' v-cloak>\
@@ -396,7 +438,9 @@
 													</div>\
 											</div>\
                     </div>\
-                	</li>\
+									</li>\
+									<button class='btn btn-block btn-dark load-more btn-lg' v-on:click='loadMore' v-cloak v-show='showLoadMore && !emptyposts'>Load More</button>\
+								<button class='btn btn-block btn-light load-more btn-lg' v-cloak v-show='emptyposts'>There are no posts yet.</button>\
 								</span>",
 								methods: {
 									unTrashPost: function(postId,index) {
@@ -412,6 +456,9 @@
 													vm.alert = "An error Occured";
 													vm.alertClass= "list-group-item-danger";
 											}); 
+									},
+									loadMore: function() {
+
 									}
 								}
 		});
@@ -421,10 +468,14 @@
         data: {
             error: null,
             showFamilies: true,
-            showNewPostButtons: false,
+						showNewPostButtons: false,
 						currentTab: "posts-component",
 						currentUser: "{{ $props['currentUser']->id }}",
-						pageOwner: "{{ $props['pageOwner']->id }}"
+						pageOwner: "{{ $props['pageOwner']->id }}",
+						showAddFriend: true,
+						showAddFamily: true,
+						alert: null,
+						alertClass: "list-group-item-danger",
         },
         created() {
             if (window.innerWidth < 577) {
@@ -447,6 +498,37 @@
 					getTrash: function () {
 						//change current tab
 						this.currentTab = "trash-component"
+					},
+					addFriend: function() {
+						let vm = this;
+						axios.post('/user/add-friend',
+                {
+										pageOwner: this.pageOwner
+                }).then(function(response){
+										vm.alert = "Successfully added to your friends";
+                    vm.alertClass= "list-group-item-success";
+										vm.showAddFriend = false;
+									console.log(response);
+                }).catch(function(){
+                    vm.alert = "An error Occured";
+                    vm.alertClass= "list-group-item-danger";
+                });
+						
+					},
+					addFamily: function() {
+						let vm = this;
+						axios.post('/user/add-family',
+							{
+									pageOwner: this.pageOwner
+							}).then(function(response){
+									vm.alert = "Successfully added to your family";
+									vm.alertClass= "list-group-item-success";
+									vm.showAddFamily = false;
+								console.log(response);
+							}).catch(function(){
+									vm.alert = "An error Occured";
+									vm.alertClass= "list-group-item-danger";
+							});
 					}
 				}
     });
