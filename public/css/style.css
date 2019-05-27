@@ -351,6 +351,10 @@ p.date {
 .profile-nav {
   z-index: 5;
 }
+
+.relationship-button {
+  margin:5px;
+}
 /*--------------------------------------------
 	Register styling
 ---------------------------------------------*/
