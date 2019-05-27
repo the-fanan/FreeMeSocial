@@ -7,6 +7,7 @@ use Auth;
 use App\Media;
 use App\User;
 use Illuminate\Support\Facades\Validator;
+use JD\Cloudder\Facades\Cloudder;
 
 class MediaController extends Controller
 {
@@ -47,12 +48,12 @@ class MediaController extends Controller
         //upload file
         $mediaMimeType = $request->media->getMimeType();
         $mimeParts = explode("/", $mediaMimeType);
-        $url = $this->uploadFile($request->media);
+        $url = $this->uploadFile($request->media, $mimeParts[0]);
         //create post
         $post = $this->currentUser->ownPosts()->create([
             'description' => $request->description,
             'type' => $mimeParts[0],
-            'url' => $url,
+            'url' => $url['secure_url'],
             'is_public' => $is_public
         ]);
         //attach to groups based on permission
@@ -198,11 +199,16 @@ class MediaController extends Controller
     /**
      * Functions not related to routes
      */
-    public function uploadFile($resource) {
+    public function uploadFile($resource, $type) {
         $fileName = time() . str_random(4) . "." .  $resource->extension();
-        $savePath = "uploads/" . $fileName;
-        $resource->storeAs("uploads/", $fileName);
-        return $savePath;
+        if ($type == "image") {
+            Cloudder::upload($resource->getRealPath(), $fileName, ["unique_filename" => false]);
+        }elseif($type == "video") {
+            Cloudder::uploadVideo($resource->getRealPath(), $fileName, ["unique_filename" => false]);
+        }
+        //$savePath = "uploads/" . $fileName;
+        //$resource->storeAs("uploads/", $fileName);
+        return Cloudder::getResult();
     }
 
 }
