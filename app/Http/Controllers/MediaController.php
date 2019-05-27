@@ -32,7 +32,7 @@ class MediaController extends Controller
         } 
 
         $fileValidator = Validator::make($request->all(), [
-            "media" => "required|mimetypes:video/3gpp,video/mp4,video/mpeg,video/ogg,video/webm,image/bmp,image/gif,image/jpeg,image/png,image/tiff|max:512",
+            "media" => "required|mimetypes:video/3gpp,video/mp4,video/mpeg,video/ogg,video/webm,image/bmp,image/gif,image/jpeg,image/png,image/tiff|max:5120",
         ]);
         if ($fileValidator->fails()) {
             return response()->json(['message' => 'Post not uploaded! Ensure media is video or photo and size not more than 5MB', 'alertClass' => 'list-group-item-danger']);
