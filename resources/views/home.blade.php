@@ -205,7 +205,7 @@
         },
         methods: {
             uploadMedia: function() {
-                if (this.uploadData.media.size > 512) {
+                if (this.uploadData.media.size/1048576 > 5) {
                     this.alert = "File size is too large! Only size of 5MB or les allowed.";
                     this.alertClass= "list-group-item-danger";
                 }else if(this.uploadData.description && this.uploadData.media && this.uploadData.restriction) {
@@ -237,7 +237,7 @@
             },
             handleFileUpload: function() {
                 this.uploadData.media = this.$refs.file.files[0];
-                if (this.uploadData.media.size > 512) {
+                if (this.uploadData.media.size/1048576 > 5) {
                     this.alert = "File size is too large! Only size of 5MB or les allowed.";
                     this.alertClass= "list-group-item-danger";
                 }
